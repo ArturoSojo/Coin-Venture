@@ -31,7 +31,7 @@ class MockBinanceRemoteDataSource implements BinanceRemoteDataSource {
     return CryptoAsset(
       id: symbol,
       symbol: symbol,
-      name: symbol.substring(0, 3),
+      name: ticker?.symbol ?? symbol.substring(0, 3),
       iconUrl: null,
     );
   }

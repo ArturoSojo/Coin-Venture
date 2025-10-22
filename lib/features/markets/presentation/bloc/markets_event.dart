@@ -1,4 +1,3 @@
-import '../../domain/usecases/get_markets.dart';
 import '../../domain/repositories/markets_repository.dart';
 
 abstract class MarketsEvent {}

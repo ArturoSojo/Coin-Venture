@@ -1,5 +1,5 @@
-import '../../../domain/usecases/sign_in_email.dart';
-import '../../../domain/usecases/sign_up_email.dart';
+import '../../domain/usecases/sign_in_email.dart';
+import '../../domain/usecases/sign_up_email.dart';
 
 abstract class AuthEvent {}
 

@@ -1,4 +1,4 @@
-import 'package:bloc/bloc.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../domain/usecases/add_transaction.dart';
 import '../../domain/usecases/get_transactions.dart';

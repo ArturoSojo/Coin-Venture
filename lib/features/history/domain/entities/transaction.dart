@@ -2,6 +2,7 @@ import 'package:equatable/equatable.dart';
 
 import '../../../trade/domain/entities/order.dart';
 import '../../../trade/domain/entities/trade_pair.dart';
+import '../../../trade/domain/entities/quote.dart';
 
 class Transaction extends Equatable {
   const Transaction({

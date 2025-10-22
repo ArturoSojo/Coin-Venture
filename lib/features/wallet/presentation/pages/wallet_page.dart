@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 
@@ -13,7 +13,7 @@ class WalletPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (_) => GetIt.I<WalletBloc>()..add(WalletStarted()),
+      create: (_) => GetIt.I<WalletBloc>()..add(const WalletStarted()),
       child: const _WalletView(),
     );
   }
@@ -39,7 +39,7 @@ class _WalletView extends StatelessWidget {
           children: [
             ListTile(
               title: const Text('Valor total del portafolio'),
-              subtitle: Text('Activo principal y diversificación'),
+              subtitle: const Text('Activo principal y diversificacion'),
               trailing: Text(Formatters.formatCurrency(state.totalAssets)),
             ),
             for (final balance in state.balances)

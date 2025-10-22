@@ -1,4 +1,4 @@
-import 'package:bloc/bloc.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../domain/entities/quote.dart';
 import '../../domain/usecases/execute_trade.dart';
@@ -37,7 +37,7 @@ class TradeBloc extends Bloc<TradeEvent, TradeState> {
         errorMessage: failure.message,
       )),
       (pairs) => emit(state.copyWith(
-        status: TradeStatus.loaded,
+        status: TradeStatus.success,
         pairs: pairs,
         selectedPair: pairs.isNotEmpty ? pairs.first : null,
       )),

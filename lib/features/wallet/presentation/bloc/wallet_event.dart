@@ -1,5 +1,11 @@
-abstract class WalletEvent {}
+abstract class WalletEvent {
+  const WalletEvent();
+}
 
-class WalletStarted extends WalletEvent {}
+class WalletStarted extends WalletEvent {
+  const WalletStarted();
+}
 
-class WalletRefreshRequested extends WalletEvent {}
+class WalletRefreshRequested extends WalletEvent {
+  const WalletRefreshRequested();
+}

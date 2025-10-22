@@ -11,7 +11,7 @@ class AppShell extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final location = GoRouter.of(context).location;
+    final location = GoRouterState.of(context).uri.toString();
     final tabs = _buildTabs();
     final currentIndex = tabs.indexWhere((tab) => location.startsWith(tab.path));
     final flags = GetIt.I<FeatureFlags>();

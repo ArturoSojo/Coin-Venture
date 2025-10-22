@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "414601306551",
+    "firebase_url": "https://coin-venture-4eec3-default-rtdb.firebaseio.com",
+    "project_id": "coin-venture-4eec3",
+    "storage_bucket": "coin-venture-4eec3.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:414601306551:android:d4e638c5c60f27f7108832",
+        "android_client_info": {
+          "package_name": "com.example.coin_venture"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "414601306551-p0eken4pv8numiuro43qqbmm4k23efit.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDBNswzkqsKXmjmyrLpzXhsMALSskFNZSY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "414601306551-p0eken4pv8numiuro43qqbmm4k23efit.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
