@@ -8,7 +8,7 @@ import '../entities/ticker.dart';
 abstract class MarketsRepository {
   Future<Either<Failure, List<Ticker>>> getMarkets({
     String? query,
-    MarketSortOption sort = MarketSortOption.marketCap,
+    MarketSortOption sort = MarketSortOption.volume,
   });
 
   Stream<Ticker> watchTicker(String symbol);
@@ -21,4 +21,4 @@ abstract class MarketsRepository {
   Future<Either<Failure, CryptoAsset>> getAsset(String symbol);
 }
 
-enum MarketSortOption { marketCap, volume, change }
+enum MarketSortOption { name, price, change, volume }

@@ -12,7 +12,7 @@ class AppEnv {
 
   // Puedes duplicar y crear un AppEnv.prod con tus valores de prod
   static const AppEnv dev = AppEnv(
-    binanceBaseUrl: 'https://api.binance.com/api/v3/ticker/24hr',
+    binanceBaseUrl: 'https://api.binance.com',
     firebaseOptions: FirebaseOptions(
       apiKey: 'AIzaSyDcMXkwN3hc9GOv3ZiW5Hcd0ySNGASMjfQ',
       authDomain: 'coin-venture-4eec3.firebaseapp.com',
