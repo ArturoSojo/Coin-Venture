@@ -54,7 +54,7 @@ import '../../features/wallet/presentation/bloc/wallet_bloc.dart';
 final sl = GetIt.instance;
 
 Future<void> configureDependencies() async {
-  final env = AppEnv.dev();
+  final env = AppEnv.current;
   sl
     ..registerSingleton<AppEnv>(env)
     ..registerSingleton<FeatureFlags>(FeatureFlags.defaultFlags)

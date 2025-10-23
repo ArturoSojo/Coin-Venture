@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 
 import 'core/config/theme.dart';
 import 'core/routing/app_router.dart';
+import 'shared/styles/app_colors.dart';
 import 'shared/styles/app_spacing.dart';
 import 'features/auth/presentation/bloc/auth_bloc.dart';
 import 'features/auth/presentation/bloc/auth_event.dart';
@@ -23,11 +24,17 @@ class CoinVentureApp extends StatelessWidget {
         theme: buildAppTheme(),
         routerConfig: router,
         builder: (context, child) {
-          return DefaultTextStyle.merge(
-            style: Theme.of(context).textTheme.bodyMedium,
-            child: Padding(
-              padding: AppSpacing.screenInsets,
-              child: child ?? const SizedBox.shrink(),
+          final theme = Theme.of(context);
+          return DecoratedBox(
+            decoration: const BoxDecoration(gradient: AppColors.appBackground),
+            child: DefaultTextStyle.merge(
+              style: theme.textTheme.bodyMedium,
+              child: SafeArea(
+                child: Padding(
+                  padding: AppSpacing.screenInsets,
+                  child: child ?? const SizedBox.shrink(),
+                ),
+              ),
             ),
           );
         },
