@@ -20,7 +20,7 @@ class GetMarkets {
 class GetMarketsParams {
   const GetMarketsParams({
     this.query,
-    this.sort = MarketSortOption.marketCap,
+    this.sort = MarketSortOption.volume,
   });
 
   final String? query;

@@ -8,7 +8,7 @@ import '../routing/app_router.dart';
 import '../routing/guards.dart';
 import '../security/token_store.dart';
 import '../../features/auth/data/datasources/firebase_auth_datasource.dart';
-import '../../features/auth/data/datasources/mock_firebase_auth_datasource.dart';
+import '../../features/auth/data/datasources/firebase_auth_datasource.dart';
 import '../../features/auth/data/datasources/mock_user_profile_datasource.dart';
 import '../../features/auth/data/datasources/user_profile_datasource.dart';
 import '../../features/auth/data/repositories_impl/auth_repository_impl.dart';
@@ -26,7 +26,6 @@ import '../../features/history/domain/usecases/add_transaction.dart';
 import '../../features/history/domain/usecases/get_transactions.dart';
 import '../../features/history/presentation/bloc/history_bloc.dart';
 import '../../features/markets/data/datasources/binance_remote_datasource.dart';
-import '../../features/markets/data/datasources/mock_binance_remote_datasource.dart';
 import '../../features/markets/data/repositories_impl/markets_repository_impl.dart';
 import '../../features/markets/domain/repositories/markets_repository.dart';
 import '../../features/markets/domain/usecases/get_markets.dart';
@@ -63,7 +62,7 @@ Future<void> configureDependencies() async {
 
   // Auth
   sl
-    ..registerLazySingleton<FirebaseAuthDataSource>(MockFirebaseAuthDataSource.new)
+    ..registerLazySingleton<FirebaseAuthDataSource>(() => FirebaseAuthDataSourceImpl())
     ..registerLazySingleton<UserProfileDataSource>(MockUserProfileDataSource.new)
     ..registerLazySingleton<AuthRepository>(
       () => AuthRepositoryImpl(
@@ -90,7 +89,7 @@ Future<void> configureDependencies() async {
 
   // Markets
   sl
-    ..registerLazySingleton<BinanceRemoteDataSource>(MockBinanceRemoteDataSource.new)
+    ..registerLazySingleton<BinanceRemoteDataSource>(() => BinanceRemoteDataSourceImpl(sl()))
     ..registerLazySingleton<MarketsRepository>(() => MarketsRepositoryImpl(sl()))
     ..registerLazySingleton(() => GetMarkets(sl()))
     ..registerFactory(() => MarketsBloc(sl<GetMarkets>()));

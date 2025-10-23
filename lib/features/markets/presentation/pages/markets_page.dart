@@ -70,7 +70,7 @@ class _MarketsViewState extends State<_MarketsView> {
                 onPressed: () => bloc.add(MarketsRefreshRequested()),
               ),
             ),
-            _MetricsRow(tickers: state.tickers),
+            _MetricsRow(state: state),
             _FiltersBar(
               controller: _searchController,
               onQueryChanged: (value) => bloc.add(MarketsSearchChanged(value)),
@@ -169,16 +169,16 @@ class _SortChip extends StatelessWidget {
 }
 
 class _MetricsRow extends StatelessWidget {
-  const _MetricsRow({required this.tickers});
+  const _MetricsRow({required this.state});
 
-  final List<Ticker> tickers;
+  final MarketsState state;
 
   @override
   Widget build(BuildContext context) {
-    final totalMarketCap = tickers.fold<double>(0, (acc, t) => acc + t.marketCap);
-    final volume24h = tickers.fold<double>(0, (acc, t) => acc + t.volume24h);
-    final btcDominance = tickers.isEmpty ? 0 : (tickers.first.marketCap / (totalMarketCap == 0 ? 1 : totalMarketCap)) * 100;
-    final coins = tickers.length;
+    final totalMarketCap = state.totalMarketCap;
+    final volume24h = state.totalVolume;
+    final dominanceValue = state.btcDominance.isNaN ? 0 : state.btcDominance;
+    final coins = state.assetCount;
 
     return Wrap(
       spacing: AppSpacing.md,
@@ -197,7 +197,7 @@ class _MetricsRow extends StatelessWidget {
         _MetricCard(
           icon: Icons.show_chart,
           title: 'BTC Dom.',
-          value: '${btcDominance.isNaN ? 0 : btcDominance.toStringAsFixed(2)}%',
+          value: '${dominanceValue.toStringAsFixed(2)}%',
         ),
         _MetricCard(
           icon: Icons.ssid_chart_rounded,
@@ -474,12 +474,14 @@ class _TableRow extends StatelessWidget {
 
 String _sortLabel(MarketSortOption option) {
   switch (option) {
-    case MarketSortOption.marketCap:
-      return 'Cap. Mercado';
-    case MarketSortOption.volume:
-      return 'Volumen 24h';
+    case MarketSortOption.name:
+      return 'Nombre';
+    case MarketSortOption.price:
+      return 'Precio';
     case MarketSortOption.change:
       return '% 24h';
+    case MarketSortOption.volume:
+      return 'Volumen 24h';
   }
 }
 

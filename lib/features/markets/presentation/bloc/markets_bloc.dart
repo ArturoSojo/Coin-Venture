@@ -60,11 +60,18 @@ class MarketsBloc extends Bloc<MarketsEvent, MarketsState> {
         status: MarketsStatus.failure,
         errorMessage: failure.message,
       )),
-      (tickers) => emit(state.copyWith(
-        status: MarketsStatus.loaded,
-        tickers: tickers,
-        lastUpdated: DateTime.now(),
-      )),
+      (tickers) {
+        final metrics = _calculateMetrics(tickers);
+        emit(state.copyWith(
+          status: MarketsStatus.loaded,
+          tickers: tickers,
+          lastUpdated: DateTime.now(),
+          totalMarketCap: metrics.totalMarketCap,
+          totalVolume: metrics.totalVolume,
+          btcDominance: metrics.btcDominance,
+          assetCount: metrics.assetCount,
+        ));
+      },
     );
   }
 
@@ -73,4 +80,41 @@ class MarketsBloc extends Bloc<MarketsEvent, MarketsState> {
     _timer?.cancel();
     return super.close();
   }
+
+  _MarketMetrics _calculateMetrics(List<Ticker> tickers) {
+    double totalMarketCap = 0;
+    double totalVolume = 0;
+    double btcDominance = 0;
+    final int assetCount = tickers.length;
+
+    for (final ticker in tickers) {
+      totalMarketCap += ticker.marketCap;
+      totalVolume += ticker.volume24h;
+      if (ticker.symbol.startsWith('BTC')) {
+        btcDominance = ticker.marketCap;
+      }
+    }
+    final dominance = totalMarketCap == 0 ? 0 : (btcDominance / totalMarketCap) * 100;
+
+    return _MarketMetrics(
+      totalMarketCap: totalMarketCap,
+      totalVolume: totalVolume,
+      btcDominance: dominance,
+      assetCount: assetCount,
+    );
+  }
+}
+
+class _MarketMetrics {
+  const _MarketMetrics({
+    required this.totalMarketCap,
+    required this.totalVolume,
+    required this.btcDominance,
+    required this.assetCount,
+  });
+
+  final double totalMarketCap;
+  final double totalVolume;
+  final double btcDominance;
+  final int assetCount;
 }
