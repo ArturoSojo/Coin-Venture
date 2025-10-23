@@ -51,9 +51,10 @@ class MarketsRepositoryImpl implements MarketsRepository {
     try {
       final rawTickers = await _remoteDataSource.getTickers();
       final filtered = _filterTickers(rawTickers, query);
-      final enriched = await _attachSparkline(filtered);
-      final sorted = _sortTickers(enriched, sort);
-      return Right(sorted);
+      final sorted = _sortTickers(filtered, sort);
+      final limited = sorted.take(10).toList(growable: false);
+      final enriched = await _attachSparkline(limited);
+      return Right(enriched);
     } on DioException catch (error) {
       return Left(NetworkFailure(message: error.message));
     }
@@ -77,16 +78,13 @@ class MarketsRepositoryImpl implements MarketsRepository {
   }
 
   @override
-  Stream<Ticker> watchTicker(String symbol) {
-    return Stream<Ticker>.periodic(
-      const Duration(seconds: 15),
-      (_) => symbol,
-    ).asyncMap((pair) async {
+  Stream<Ticker> watchTicker(String symbol) async* {
+    while (true) {
       final tickers = await _remoteDataSource.getTickers();
       final ticker = tickers.firstWhere(
-        (item) => item.symbol == pair,
+        (item) => item.symbol == symbol,
         orElse: () => TickerModel(
-          symbol: pair,
+          symbol: symbol,
           price: 0,
           change24h: 0,
           volume24h: 0,
@@ -97,12 +95,13 @@ class MarketsRepositoryImpl implements MarketsRepository {
           lowPrice: 0,
         ),
       );
-      return ticker;
-    });
+      yield ticker;
+      await Future<void>.delayed(const Duration(seconds: 15));
+    }
   }
 
-  List<Ticker> _sortTickers(List<Ticker> data, MarketSortOption sort) {
-    final tickers = List<Ticker>.from(data);
+  List<TickerModel> _sortTickers(List<TickerModel> data, MarketSortOption sort) {
+    final tickers = List<TickerModel>.from(data);
     switch (sort) {
       case MarketSortOption.name:
         tickers.sort((a, b) => a.symbol.compareTo(b.symbol));
@@ -135,7 +134,7 @@ class MarketsRepositoryImpl implements MarketsRepository {
   }
 
   Future<List<TickerModel>> _attachSparkline(List<TickerModel> data) async {
-    final topSymbols = data.take(40).map((ticker) => ticker.symbol).toList();
+    final topSymbols = data.map((ticker) => ticker.symbol).toList(growable: false);
     final sparklineFutures = <Future<List<double>>>[];
     for (final symbol in topSymbols) {
       sparklineFutures.add(

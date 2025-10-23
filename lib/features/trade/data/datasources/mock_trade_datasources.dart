@@ -1,4 +1,4 @@
-import '../../domain/entities/quote.dart';
+import '../../domain/entities/order.dart';
 import '../../domain/entities/trade_pair.dart';
 import 'markets_datasource.dart';
 
@@ -14,18 +14,10 @@ class MockMarketsPriceDataSource implements MarketsPriceDataSource {
 }
 
 class MockLocalTradeDataSource implements LocalTradeDataSource {
-  final List<Map<String, Object>> orders = [];
+  final List<Order> orders = [];
 
   @override
-  Future<void> persistOrder({
-    required TradePair pair,
-    required TradeSide side,
-    required double amount,
-  }) async {
-    orders.add({
-      'pair': pair.symbol,
-      'side': side.name,
-      'amount': amount,
-    });
+  Future<void> persistOrder(Order order) async {
+    orders.add(order);
   }
 }

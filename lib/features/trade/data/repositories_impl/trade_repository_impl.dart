@@ -39,17 +39,16 @@ class TradeRepositoryImpl implements TradeRepository {
         price: price,
         createdAt: DateTime.now(),
       );
-      await _localTradeDataSource.persistOrder(
-        pair: pair,
-        side: side,
-        amount: amount,
-      );
+      final filledOrder = order.copyWith(status: OrderStatus.filled);
+      await _localTradeDataSource.persistOrder(filledOrder);
       return Right(ExchangeResult(
-        order: order.copyWith(status: OrderStatus.filled),
-        message: 'Orden ejecutada de manera simulada',
+        order: filledOrder,
+        message: 'Orden ejecutada correctamente',
       ));
     } on ServerException catch (error) {
       return Left(NetworkFailure(message: error.message));
+    } on CacheException catch (error) {
+      return Left(CacheFailure(message: error.message));
     }
   }
 

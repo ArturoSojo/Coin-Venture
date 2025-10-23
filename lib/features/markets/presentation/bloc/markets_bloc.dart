@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../domain/usecases/get_markets.dart';
+import '../../domain/entities/ticker.dart';
 import 'markets_event.dart';
 import 'markets_state.dart';
 
@@ -29,7 +30,8 @@ class MarketsBloc extends Bloc<MarketsEvent, MarketsState> {
     MarketsRefreshRequested event,
     Emitter<MarketsState> emit,
   ) async {
-    await _refresh(emit);
+    final keepLoading = state.status == MarketsStatus.loaded && state.tickers.isNotEmpty;
+    await _refresh(emit, keepLoading: keepLoading);
   }
 
   Future<void> _onSearchChanged(
@@ -94,7 +96,9 @@ class MarketsBloc extends Bloc<MarketsEvent, MarketsState> {
         btcDominance = ticker.marketCap;
       }
     }
-    final dominance = totalMarketCap == 0 ? 0 : (btcDominance / totalMarketCap) * 100;
+    final dominance = totalMarketCap == 0
+        ? 0.0
+        : (btcDominance / totalMarketCap) * 100;
 
     return _MarketMetrics(
       totalMarketCap: totalMarketCap,

@@ -1,8 +1,13 @@
-﻿import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../core/config/feature_flags.dart';
+import '../../features/auth/domain/entities/auth_user.dart';
+import '../../features/auth/presentation/bloc/auth_bloc.dart';
+import '../../features/auth/presentation/bloc/auth_event.dart';
+import '../../features/auth/presentation/bloc/auth_state.dart';
 import '../styles/app_colors.dart';
 import '../styles/app_spacing.dart';
 import '../styles/app_typography.dart';
@@ -20,6 +25,7 @@ class AppShell extends StatelessWidget {
       (tab) => location.startsWith(tab.path),
       orElse: () => tabs.first,
     );
+    final authState = context.watch<AuthBloc>().state;
 
     return Scaffold(
       backgroundColor: Colors.transparent,
@@ -29,6 +35,8 @@ class AppShell extends StatelessWidget {
           _AppTopBar(
             tabs: tabs,
             selectedTab: selected,
+            user: authState.user,
+            status: authState.status,
           ),
           const SizedBox(height: AppSpacing.lg),
           Expanded(
@@ -50,15 +58,22 @@ class _AppTopBar extends StatelessWidget {
   const _AppTopBar({
     required this.tabs,
     required this.selectedTab,
+    required this.user,
+    required this.status,
   });
 
   final List<_ShellDestination> tabs;
   final _ShellDestination selectedTab;
+  final AuthUser? user;
+  final AuthStatus status;
 
   @override
   Widget build(BuildContext context) {
     final router = GoRouter.of(context);
     final flags = GetIt.I<FeatureFlags>();
+    final displayName = user?.displayName?.isNotEmpty == true ? user!.displayName! : (user?.email ?? 'Invitado');
+    final email = user?.email;
+    final photoUrl = user?.photoUrl;
 
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 28, vertical: 18),
@@ -97,14 +112,17 @@ class _AppTopBar extends StatelessWidget {
             ),
           const SizedBox(width: AppSpacing.md),
           _UserBadge(
-            displayName: 'Usuario Demo',
+            displayName: displayName,
+            email: email,
+            photoUrl: photoUrl,
+            loading: status == AuthStatus.loading,
             onPressed: () => router.go(flags.settingsEnabled ? '/home/settings' : '/home/markets'),
           ),
           const SizedBox(width: AppSpacing.sm),
           _OutlinedIconButton(
             icon: Icons.logout_rounded,
-            tooltip: 'Cerrar sesiÃ³n',
-            onTap: () => router.go('/login'),
+            tooltip: 'Cerrar sesion',
+            onTap: () => context.read<AuthBloc>().add(AuthSignOutRequested()),
           ),
         ],
       ),
@@ -257,14 +275,31 @@ class _OutlinedIconButton extends StatelessWidget {
 class _UserBadge extends StatelessWidget {
   const _UserBadge({
     required this.displayName,
+    required this.email,
+    required this.photoUrl,
+    required this.loading,
     required this.onPressed,
   });
 
   final String displayName;
+  final String? email;
+  final String? photoUrl;
+  final bool loading;
   final VoidCallback onPressed;
 
   @override
   Widget build(BuildContext context) {
+    final subtitle = email ?? '';
+    final initials = displayName.trim().isEmpty
+        ? '??'
+        : displayName
+            .trim()
+            .split(RegExp(r'\s+'))
+            .where((part) => part.isNotEmpty)
+            .take(2)
+            .map((part) => part[0].toUpperCase())
+            .join();
+
     return GestureDetector(
       onTap: onPressed,
       child: Container(
@@ -276,22 +311,88 @@ class _UserBadge extends StatelessWidget {
         ),
         child: Row(
           children: [
-            Container(
+            SizedBox(
               width: 32,
               height: 32,
-              decoration: const BoxDecoration(
-                shape: BoxShape.circle,
-                gradient: AppColors.primaryButton,
+              child: _UserAvatar(
+                photoUrl: photoUrl,
+                initials: initials,
+                loading: loading,
               ),
-              child: const Icon(Icons.person, size: 18, color: Colors.white),
             ),
             const SizedBox(width: AppSpacing.xs),
-            Text(
-              displayName,
-              style: AppTypography.bodySm.copyWith(color: AppColors.textSecondary),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  displayName,
+                  style: AppTypography.bodySm.copyWith(color: AppColors.textSecondary, fontWeight: FontWeight.w600),
+                ),
+                if (subtitle.isNotEmpty)
+                  Text(
+                    subtitle,
+                    style: AppTypography.caption.copyWith(color: AppColors.textSecondary),
+                  ),
+              ],
             ),
           ],
         ),
+      ),
+    );
+  }
+}
+
+class _UserAvatar extends StatelessWidget {
+  const _UserAvatar({
+    required this.photoUrl,
+    required this.initials,
+    required this.loading,
+  });
+
+  final String? photoUrl;
+  final String initials;
+  final bool loading;
+
+  @override
+  Widget build(BuildContext context) {
+    if (loading) {
+      return const Center(
+        child: SizedBox(
+          width: 18,
+          height: 18,
+          child: CircularProgressIndicator(strokeWidth: 2),
+        ),
+      );
+    }
+    if (photoUrl != null && photoUrl!.isNotEmpty) {
+      return ClipOval(
+        child: Image.network(
+          photoUrl!,
+          fit: BoxFit.cover,
+          errorBuilder: (_, __, ___) => _InitialsAvatar(initials: initials),
+        ),
+      );
+    }
+    return _InitialsAvatar(initials: initials);
+  }
+}
+
+class _InitialsAvatar extends StatelessWidget {
+  const _InitialsAvatar({required this.initials});
+
+  final String initials;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      decoration: const BoxDecoration(
+        shape: BoxShape.circle,
+        gradient: AppColors.primaryButton,
+      ),
+      alignment: Alignment.center,
+      child: Text(
+        initials,
+        style: AppTypography.caption.copyWith(color: Colors.white, fontWeight: FontWeight.w600),
       ),
     );
   }

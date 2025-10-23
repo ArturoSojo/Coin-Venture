@@ -1,4 +1,6 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dio/dio.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get_it/get_it.dart';
 
 import '../config/env.dart';
@@ -8,8 +10,7 @@ import '../routing/app_router.dart';
 import '../routing/guards.dart';
 import '../security/token_store.dart';
 import '../../features/auth/data/datasources/firebase_auth_datasource.dart';
-import '../../features/auth/data/datasources/firebase_auth_datasource.dart';
-import '../../features/auth/data/datasources/mock_user_profile_datasource.dart';
+import '../../features/auth/data/datasources/firestore_user_profile_datasource.dart';
 import '../../features/auth/data/datasources/user_profile_datasource.dart';
 import '../../features/auth/data/repositories_impl/auth_repository_impl.dart';
 import '../../features/auth/domain/repositories/auth_repository.dart';
@@ -19,6 +20,7 @@ import '../../features/auth/domain/usecases/sign_in_google.dart';
 import '../../features/auth/domain/usecases/sign_out.dart';
 import '../../features/auth/domain/usecases/sign_up_email.dart';
 import '../../features/auth/presentation/bloc/auth_bloc.dart';
+import '../../features/history/data/datasources/firestore_history_datasource.dart';
 import '../../features/history/data/datasources/local_history_datasource.dart';
 import '../../features/history/data/repositories_impl/history_repository_impl.dart';
 import '../../features/history/domain/repositories/history_repository.dart';
@@ -36,7 +38,8 @@ import '../../features/settings/domain/repositories/settings_repository.dart';
 import '../../features/settings/domain/usecases/get_settings.dart';
 import '../../features/settings/domain/usecases/save_settings.dart';
 import '../../features/settings/presentation/bloc/settings_bloc.dart';
-import '../../features/trade/data/datasources/mock_trade_datasources.dart';
+import '../../features/trade/data/datasources/binance_markets_price_datasource.dart';
+import '../../features/trade/data/datasources/firestore_trade_datasource.dart';
 import '../../features/trade/data/datasources/markets_datasource.dart';
 import '../../features/trade/data/repositories_impl/trade_repository_impl.dart';
 import '../../features/trade/domain/repositories/trade_repository.dart';
@@ -44,11 +47,13 @@ import '../../features/trade/domain/usecases/execute_trade.dart';
 import '../../features/trade/domain/usecases/get_pairs.dart';
 import '../../features/trade/domain/usecases/get_quote.dart';
 import '../../features/trade/presentation/bloc/trade_bloc.dart';
+import '../../features/wallet/data/datasources/firestore_balances_datasource.dart';
 import '../../features/wallet/data/datasources/local_balances_datasource.dart';
 import '../../features/wallet/data/repositories_impl/wallet_repository_impl.dart';
 import '../../features/wallet/domain/repositories/wallet_repository.dart';
 import '../../features/wallet/domain/usecases/get_balances.dart';
 import '../../features/wallet/presentation/bloc/wallet_bloc.dart';
+import '../../features/settings/data/datasources/firestore_settings_datasource.dart';
 
 final sl = GetIt.instance;
 
@@ -58,12 +63,16 @@ Future<void> configureDependencies() async {
     ..registerSingleton<AppEnv>(env)
     ..registerSingleton<FeatureFlags>(FeatureFlags.defaultFlags)
     ..registerLazySingleton<TokenStore>(TokenStore.create)
-    ..registerLazySingleton<Dio>(() => buildDioClient(env));
+    ..registerLazySingleton<Dio>(() => buildDioClient(env))
+    ..registerLazySingleton<FirebaseFirestore>(() => FirebaseFirestore.instance)
+    ..registerLazySingleton<FirebaseAuth>(() => FirebaseAuth.instance);
 
   // Auth
   sl
     ..registerLazySingleton<FirebaseAuthDataSource>(() => FirebaseAuthDataSourceImpl())
-    ..registerLazySingleton<UserProfileDataSource>(MockUserProfileDataSource.new)
+    ..registerLazySingleton<UserProfileDataSource>(
+      () => FirestoreUserProfileDataSource(sl<FirebaseFirestore>()),
+    )
     ..registerLazySingleton<AuthRepository>(
       () => AuthRepositoryImpl(
         remote: sl<FirebaseAuthDataSource>(),
@@ -96,15 +105,21 @@ Future<void> configureDependencies() async {
 
   // Wallet
   sl
-    ..registerLazySingleton<LocalBalancesDataSource>(MockBalancesDataSource.new)
+    ..registerLazySingleton<LocalBalancesDataSource>(
+      () => FirestoreBalancesDataSource(sl<FirebaseFirestore>(), sl<FirebaseAuth>()),
+    )
     ..registerLazySingleton<WalletRepository>(() => WalletRepositoryImpl(sl()))
     ..registerLazySingleton(() => GetBalances(sl()))
     ..registerFactory(() => WalletBloc(sl<GetBalances>()));
 
   // Trade
   sl
-    ..registerLazySingleton<MarketsPriceDataSource>(MockMarketsPriceDataSource.new)
-    ..registerLazySingleton<LocalTradeDataSource>(MockLocalTradeDataSource.new)
+    ..registerLazySingleton<MarketsPriceDataSource>(
+      () => BinanceMarketsPriceDataSource(sl<Dio>()),
+    )
+    ..registerLazySingleton<LocalTradeDataSource>(
+      () => FirestoreTradeDataSource(sl<FirebaseFirestore>(), sl<FirebaseAuth>()),
+    )
     ..registerLazySingleton<TradeRepository>(
       () => TradeRepositoryImpl(
         marketsDataSource: sl<MarketsPriceDataSource>(),
@@ -125,7 +140,9 @@ Future<void> configureDependencies() async {
 
   // History
   sl
-    ..registerLazySingleton<LocalHistoryDataSource>(MemoryHistoryDataSource.new)
+    ..registerLazySingleton<LocalHistoryDataSource>(
+      () => FirestoreHistoryDataSource(sl<FirebaseFirestore>(), sl<FirebaseAuth>()),
+    )
     ..registerLazySingleton<HistoryRepository>(() => HistoryRepositoryImpl(sl()))
     ..registerLazySingleton(() => GetTransactions(sl()))
     ..registerLazySingleton(() => AddTransaction(sl()))
@@ -138,7 +155,9 @@ Future<void> configureDependencies() async {
 
   // Settings
   sl
-    ..registerLazySingleton<LocalSettingsDataSource>(MemorySettingsDataSource.new)
+    ..registerLazySingleton<LocalSettingsDataSource>(
+      () => FirestoreSettingsDataSource(sl<FirebaseFirestore>(), sl<FirebaseAuth>()),
+    )
     ..registerLazySingleton<SettingsRepository>(() => SettingsRepositoryImpl(sl()))
     ..registerLazySingleton(() => GetSettings(sl()))
     ..registerLazySingleton(() => SaveSettings(sl()))

@@ -1,6 +1,8 @@
-﻿import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
+import 'package:coin_venture/features/auth/presentation/bloc/auth_bloc.dart';
+import 'package:coin_venture/features/auth/domain/entities/auth_user.dart';
 
 import '../../../../shared/styles/app_colors.dart';
 import '../../../../shared/styles/app_spacing.dart';
@@ -48,6 +50,8 @@ class _SettingsView extends StatelessWidget {
 
         final bloc = context.read<SettingsBloc>();
         final settings = state.settings;
+        final authState = context.watch<AuthBloc>().state;
+        final user = authState.user;
 
         return AppPage(
           children: [
@@ -65,7 +69,7 @@ class _SettingsView extends StatelessWidget {
                 ],
               ),
             ),
-            _ProfileSection(settings: settings),
+            _ProfileSection(settings: settings, user: user),
             _NotificationsSection(
               settings: settings,
               onChanged: (updated) => bloc.add(SettingsToggled(updated)),
@@ -96,38 +100,74 @@ class _SettingsView extends StatelessWidget {
 }
 
 class _ProfileSection extends StatelessWidget {
-  const _ProfileSection({required this.settings});
+  const _ProfileSection({required this.settings, required this.user});
 
   final AppSettings settings;
+  final AuthUser? user;
 
   @override
   Widget build(BuildContext context) {
+    final displayName = user?.displayName?.isNotEmpty == true ? user!.displayName! : (user?.email ?? 'Invitado');
+    final email = user?.email ?? '--';
+    final photoUrl = user?.photoUrl ?? '';
+    final bool hasPhoto = photoUrl.isNotEmpty;
+    final initials = displayName.trim().isEmpty
+        ? '??'
+        : displayName
+            .trim()
+            .split(RegExp(r'\s+'))
+            .where((part) => part.isNotEmpty)
+            .take(2)
+            .map((part) => part[0].toUpperCase())
+            .join();
+
     return AppCard(
       padding: const EdgeInsets.all(AppSpacing.lg),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-              const Text('Perfil', style: AppTypography.titleSm),
+          const Text('Perfil', style: AppTypography.titleSm),
           const SizedBox(height: AppSpacing.md),
           Row(
             children: [
-              Container(
-                width: 64,
-                height: 64,
-                decoration: const BoxDecoration(
-                  shape: BoxShape.circle,
-                  gradient: AppColors.primaryButton,
-                ),
-                child: const Icon(Icons.person, color: Colors.white),
+              CircleAvatar(
+                radius: 32,
+                backgroundColor: AppColors.primary.withValues(alpha: 0.3),
+                backgroundImage: hasPhoto ? NetworkImage(photoUrl) : null,
+                child: hasPhoto
+                    ? null
+                    : Text(
+                        initials,
+                        style: AppTypography.bodyMd.copyWith(color: Colors.white, fontWeight: FontWeight.w600),
+                      ),
               ),
               const SizedBox(width: AppSpacing.lg),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const Text('Usuario Demo', style: AppTypography.bodyMd),
-                  const SizedBox(height: 4),
-                  Text('demo@crypto.com', style: AppTypography.bodySm.copyWith(color: AppColors.textSecondary)),
-                ],
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      displayName,
+                      style: AppTypography.bodyMd.copyWith(color: AppColors.textPrimary, fontWeight: FontWeight.w600),
+                    ),
+                    const SizedBox(height: 4),
+                    Text(
+                      email,
+                      style: AppTypography.bodySm.copyWith(color: AppColors.textSecondary),
+                    ),
+                    const SizedBox(height: AppSpacing.sm),
+                    Wrap(
+                      spacing: AppSpacing.sm,
+                      runSpacing: AppSpacing.xs,
+                      children: [
+                        _buildTagChip(Icons.public, settings.language.toUpperCase()),
+                        _buildTagChip(Icons.attach_money, settings.currency.toUpperCase()),
+                        if (settings.autoRefresh)
+                          _buildTagChip(Icons.bolt, 'Auto refresh'),
+                      ],
+                    ),
+                  ],
+                ),
               ),
             ],
           ),
@@ -135,7 +175,30 @@ class _ProfileSection extends StatelessWidget {
       ),
     );
   }
+
+  Widget _buildTagChip(IconData icon, String label) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: AppSpacing.sm, vertical: AppSpacing.xs),
+      decoration: BoxDecoration(
+        color: AppColors.bgInput.withValues(alpha: 0.6),
+        borderRadius: BorderRadius.circular(12),
+        border: Border.all(color: AppColors.divider),
+      ),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Icon(icon, size: 14, color: AppColors.primary),
+          const SizedBox(width: 4),
+          Text(
+            label,
+            style: AppTypography.caption.copyWith(color: AppColors.textSecondary),
+          ),
+        ],
+      ),
+    );
+  }
 }
+
 
 class _NotificationsSection extends StatelessWidget {
   const _NotificationsSection({

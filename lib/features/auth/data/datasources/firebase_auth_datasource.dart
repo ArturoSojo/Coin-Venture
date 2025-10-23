@@ -23,11 +23,12 @@ class FirebaseAuthDataSourceImpl implements FirebaseAuthDataSource {
     FirebaseAuth? firebaseAuth,
     GoogleSignIn? googleSignIn,
   })  : _auth = firebaseAuth ?? FirebaseAuth.instance,
-        _googleSignIn = googleSignIn ?? GoogleSignIn(scopes: const ['email']);
+        _googleSignIn = googleSignIn ?? GoogleSignIn.instance;
 
   final FirebaseAuth _auth;
   final GoogleSignIn _googleSignIn;
   bool _persistenceConfigured = false;
+  bool _googleConfigured = false;
 
   Future<void> _ensurePersistence() async {
     if (_persistenceConfigured) {
@@ -37,10 +38,18 @@ class FirebaseAuthDataSourceImpl implements FirebaseAuthDataSource {
       try {
         await _auth.setPersistence(Persistence.LOCAL);
       } on FirebaseAuthException catch (error) {
-        throw AuthException(error.message ?? 'No se pudo configurar la sesion');
+        throw AuthException(message: error.message ?? 'No se pudo configurar la sesion');
       }
     }
     _persistenceConfigured = true;
+  }
+
+  Future<void> _ensureGoogleInitialized() async {
+    if (_googleConfigured || kIsWeb) {
+      return;
+    }
+    await _googleSignIn.initialize();
+    _googleConfigured = true;
   }
 
   AuthUser _mapUser(User user) {
@@ -64,10 +73,13 @@ class FirebaseAuthDataSourceImpl implements FirebaseAuthDataSource {
     await _ensurePersistence();
     final user = _auth.currentUser;
     if (user == null) {
-      throw const AuthException('No hay usuario autenticado');
+      throw const AuthException(message: 'No hay usuario autenticado');
     }
     try {
       final accessToken = await user.getIdToken(true);
+      if (accessToken == null || accessToken.isEmpty) {
+        throw const AuthException(message: 'No fue posible refrescar el token');
+      }
       final tokenResult = await user.getIdTokenResult();
       final refreshToken = user.refreshToken ?? '';
       final expiration = tokenResult.expirationTime ?? DateTime.now().add(const Duration(minutes: 55));
@@ -77,20 +89,21 @@ class FirebaseAuthDataSourceImpl implements FirebaseAuthDataSource {
         expiry: expiration,
       );
     } on FirebaseAuthException catch (error) {
-      throw AuthException(error.message ?? 'No fue posible refrescar el token');
+      throw AuthException(message: error.message ?? 'No fue posible refrescar el token');
     }
   }
 
   @override
   Future<void> signOut() async {
     await _ensurePersistence();
+    await _ensureGoogleInitialized();
     try {
       if (!kIsWeb) {
         await _googleSignIn.signOut();
       }
       await _auth.signOut();
     } on FirebaseAuthException catch (error) {
-      throw AuthException(error.message ?? 'No fue posible cerrar sesion');
+      throw AuthException(message: error.message ?? 'No fue posible cerrar sesion');
     }
   }
 
@@ -101,11 +114,11 @@ class FirebaseAuthDataSourceImpl implements FirebaseAuthDataSource {
       final credential = await _auth.signInWithEmailAndPassword(email: email, password: password);
       final user = credential.user;
       if (user == null) {
-        throw const AuthException('No fue posible iniciar sesion con correo');
+        throw const AuthException(message: 'No fue posible iniciar sesion con correo');
       }
       return _mapUser(user);
     } on FirebaseAuthException catch (error) {
-      throw AuthException(error.message ?? 'Credenciales invalidas');
+      throw AuthException(message: error.message ?? 'Credenciales invalidas');
     }
   }
 
@@ -116,45 +129,55 @@ class FirebaseAuthDataSourceImpl implements FirebaseAuthDataSource {
       final credential = await _auth.createUserWithEmailAndPassword(email: email, password: password);
       final user = credential.user;
       if (user == null) {
-        throw const AuthException('No fue posible registrar la cuenta');
+        throw const AuthException(message: 'No fue posible registrar la cuenta');
       }
       return _mapUser(user);
     } on FirebaseAuthException catch (error) {
-      throw AuthException(error.message ?? 'No fue posible registrar la cuenta');
+      throw AuthException(message: error.message ?? 'No fue posible registrar la cuenta');
     }
   }
 
   @override
   Future<AuthUser> signInWithGoogle() async {
     await _ensurePersistence();
+    await _ensureGoogleInitialized();
     try {
       if (kIsWeb) {
         final provider = GoogleAuthProvider();
         final credential = await _auth.signInWithPopup(provider);
         final user = credential.user;
         if (user == null) {
-          throw const AuthException('No fue posible iniciar sesion con Google');
+          throw const AuthException(message: 'No fue posible iniciar sesion con Google');
         }
         return _mapUser(user);
       }
 
-      final googleUser = await _googleSignIn.signIn();
-      if (googleUser == null) {
-        throw const AuthException('Inicio de sesion cancelado');
+      if (!_googleSignIn.supportsAuthenticate()) {
+        throw const AuthException(
+          message: 'Google Sign In no soportado en esta plataforma',
+        );
       }
-      final googleAuth = await googleUser.authentication;
-      final credential = GoogleAuthProvider.credential(
-        idToken: googleAuth.idToken,
-        accessToken: googleAuth.accessToken,
-      );
+
+      final account = await _googleSignIn.authenticate();
+      final authData = account.authentication;
+      final idToken = authData.idToken;
+      if (idToken == null || idToken.isEmpty) {
+        throw const AuthException(message: 'No se recibieron credenciales validas de Google');
+      }
+      final credential = GoogleAuthProvider.credential(idToken: idToken);
       final userCredential = await _auth.signInWithCredential(credential);
       final user = userCredential.user;
       if (user == null) {
-        throw const AuthException('No fue posible iniciar sesion con Google');
+        throw const AuthException(message: 'No fue posible iniciar sesion con Google');
       }
       return _mapUser(user);
+    } on GoogleSignInException catch (error) {
+      if (error.code == GoogleSignInExceptionCode.canceled) {
+        throw const AuthException(message: 'Inicio de sesion cancelado');
+      }
+      throw AuthException(message: error.description ?? 'No fue posible iniciar sesion con Google');
     } on FirebaseAuthException catch (error) {
-      throw AuthException(error.message ?? 'No fue posible iniciar sesion con Google');
+      throw AuthException(message: error.message ?? 'No fue posible iniciar sesion con Google');
     }
   }
 

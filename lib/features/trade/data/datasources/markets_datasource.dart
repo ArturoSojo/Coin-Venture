@@ -1,4 +1,4 @@
-import '../../domain/entities/quote.dart';
+import '../../domain/entities/order.dart';
 import '../../domain/entities/trade_pair.dart';
 
 abstract class MarketsPriceDataSource {
@@ -6,5 +6,5 @@ abstract class MarketsPriceDataSource {
 }
 
 abstract class LocalTradeDataSource {
-  Future<void> persistOrder({required TradePair pair, required TradeSide side, required double amount});
+  Future<void> persistOrder(Order order);
 }
