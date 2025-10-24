@@ -40,5 +40,3 @@ Cada feature se divide en `domain`, `data` y `presentation` para mantener las re
 1. Instala Flutter (`>=3.3.0`).
 2. Ejecuta `flutter pub get` para descargar las dependencias.
 3. Lanza la aplicación con `flutter run -d chrome` o el dispositivo de tu preferencia.
-
-Este repositorio incluye *data sources* simulados para poder navegar la aplicación sin configuración externa. Sustituye estas clases mock por integraciones reales (Firebase, Binance, etc.) para conectarte a servicios en producción.
