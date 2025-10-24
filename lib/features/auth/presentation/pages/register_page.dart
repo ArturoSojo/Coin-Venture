@@ -79,7 +79,7 @@ class _RegisterPageState extends State<RegisterPage> {
                 const Text('Crear cuenta', style: AppTypography.titleLg),
                 const SizedBox(height: AppSpacing.xs),
                 Text(
-                  'Unete a CryptoExchange en segundos',
+                  'Unete a Coin Venture en segundos',
                   style: AppTypography.bodyMd.copyWith(color: AppColors.textSecondary),
                 ),
                 const SizedBox(height: AppSpacing.xl),

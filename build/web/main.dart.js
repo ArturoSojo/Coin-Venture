@@ -47681,7 +47681,7 @@ s=r.c
 s.toString
 J.eC(A.ed(s,!1,t.tj),new A.rf(new A.arH(r.e.a.a,r.f.a.a)))},
 G(a){var s=this,r=null,q=A.cZ(r,B.LA,B.v,r,r,new A.bs(r,r,r,A.c0(28),B.qc,B.cc,B.A),r,96,r,r,r,r,96),p=A.aF("Inicia sesion en tu cuenta",r,r,r,B.ar.au(B.x),r,r),o=A.ra(s.e,"tu@email.com",B.mT,"Email",!1,r,B.pS,r,new A.aAs()),n=s.r,m=t.p
-return A.apw(r,B.E,A.fE(A.aKZ(new A.fj(B.Fz,A.bW(A.b([q,B.bw,B.af7,B.aQ,p,B.j1,A.dA(A.aPm(A.bW(A.b([o,B.ah,A.ra(s.f,"Introduce tu contrasena",r,"Contrasena",n,r,B.pR,A.R2(r,r,A.iP(n?B.l4:B.l3,r,r,r),r,r,new A.aAt(s),r,r,r),new A.aAu()),B.j1,A.NX(B.Lo,"Iniciar sesion",s.galq()),B.bw,A.d9(A.b([A.dK(A.aOP(B.an.bn(0.6)),1),B.d0,A.aF("O continua con",r,r,r,B.z.au(B.x),r,r),B.d0,A.dK(A.aOP(B.an.bn(0.6)),1)],m),B.J,B.o,B.q),B.bw,A.aNR(!0,B.Li,"Google",new A.aAv(a)),B.ah,new A.fg(B.S,r,r,A.VF(A.aF("No tienes cuenta? Registrate",r,r,r,B.z.au(B.ax),r,r),new A.aAw(a),r),r)],m),B.bg,B.o,B.q),s.d),r,B.hC)],m),B.J,B.o,B.q),r),B.pd),r,r))}}
+return A.apw(r,B.E,A.fE(A.aKZ(new A.fj(B.Fz,A.bW(A.b([q,B.bw,B.aeX,B.aQ,p,B.j1,A.dA(A.aPm(A.bW(A.b([o,B.ah,A.ra(s.f,"Introduce tu contrasena",r,"Contrasena",n,r,B.pR,A.R2(r,r,A.iP(n?B.l4:B.l3,r,r,r),r,r,new A.aAt(s),r,r,r),new A.aAu()),B.j1,A.NX(B.Lo,"Iniciar sesion",s.galq()),B.bw,A.d9(A.b([A.dK(A.aOP(B.an.bn(0.6)),1),B.d0,A.aF("O continua con",r,r,r,B.z.au(B.x),r,r),B.d0,A.dK(A.aOP(B.an.bn(0.6)),1)],m),B.J,B.o,B.q),B.bw,A.aNR(!0,B.Li,"Google",new A.aAv(a)),B.ah,new A.fg(B.S,r,r,A.VF(A.aF("No tienes cuenta? Registrate",r,r,r,B.z.au(B.ax),r,r),new A.aAw(a),r),r)],m),B.bg,B.o,B.q),s.d),r,B.hC)],m),B.J,B.o,B.q),r),B.pd),r,r))}}
 A.aAs.prototype={
 $1(a){if(a.length===0)return"Ingresa tu correo electronico"
 if(!B.d.n(a,"@"))return"Correo invalido"
@@ -47725,7 +47725,7 @@ if(!r.d.gL().xg())return
 s=r.c
 s.toString
 J.eC(A.ed(s,!1,t.tj),new A.re(new A.arI(r.e.a.a,r.f.a.a)))},
-G(a){var s,r,q=this,p=null,o=A.cZ(p,B.LF,B.v,p,p,new A.bs(p,p,p,A.c0(28),B.qc,B.cc,B.A),p,92,p,p,p,p,92),n=A.aF("Unete a CryptoExchange en segundos",p,p,p,B.ar.au(B.x),p,p),m=A.ra(q.e,"demo@crypto.com",B.mT,"Email",!1,p,B.pS,p,new A.aBV()),l=q.w
+G(a){var s,r,q=this,p=null,o=A.cZ(p,B.LF,B.v,p,p,new A.bs(p,p,p,A.c0(28),B.qc,B.cc,B.A),p,92,p,p,p,p,92),n=A.aF("Unete a Coin Venture en segundos",p,p,p,B.ar.au(B.x),p,p),m=A.ra(q.e,"demo@crypto.com",B.mT,"Email",!1,p,B.pS,p,new A.aBV()),l=q.w
 l=A.ra(q.f,"Minimo 6 caracteres",p,"Contrasena",l,p,B.pR,A.R2(p,p,A.iP(l?B.l4:B.l3,p,p,p),p,p,new A.aBW(q),p,p,p),new A.aBX())
 s=q.x
 r=t.p
@@ -48007,7 +48007,7 @@ return A.fE(A.dA(A.aF(s,r,r,r,B.z.au(B.aY),r,r),r,B.ak),r,r)
 case 2:return new A.Zz(b,r)}},
 $S:378}
 A.Zz.prototype={
-G(a){var s,r,q,p,o=null,n=this.c.b,m=J.a1(n),l=m.gq(n),k=m.iO(n,new A.azn()).gq(0),j=t.p,i=A.b([A.dA(A.bW(A.b([B.aeY,B.aQ,A.aF("Registro completo de tus transacciones",o,o,o,B.z.au(B.x),o,o),B.bw,A.d9(A.b([new A.AI(B.pQ,"Operaciones",B.f.k(l),o),B.c_,new A.AI(B.Le,"Compras",B.f.k(k),o),B.c_,new A.AI(B.Lf,"Ventas",B.f.k(l-k),o)],j),B.J,B.o,B.q)],j),B.T,B.o,B.q),o,B.ak)],j)
+G(a){var s,r,q,p,o=null,n=this.c.b,m=J.a1(n),l=m.gq(n),k=m.iO(n,new A.azn()).gq(0),j=t.p,i=A.b([A.dA(A.bW(A.b([B.aeZ,B.aQ,A.aF("Registro completo de tus transacciones",o,o,o,B.z.au(B.x),o,o),B.bw,A.d9(A.b([new A.AI(B.pQ,"Operaciones",B.f.k(l),o),B.c_,new A.AI(B.Le,"Compras",B.f.k(k),o),B.c_,new A.AI(B.Lf,"Ventas",B.f.k(l-k),o)],j),B.J,B.o,B.q)],j),B.T,B.o,B.q),o,B.ak)],j)
 if(m.ga3(n))i.push(A.dA(A.bW(A.b([B.LC,B.ah,A.aF("Sin transacciones aun",o,o,o,B.ar.au(B.aj),o,o),B.aQ,A.aF("Comienza a operar para ver tu historial aqui",o,o,o,B.z.au(B.x),o,o)],j),B.J,B.fk,B.q),o,B.hC))
 else{s=A.b([],j)
 for(r=m.ga7(n);r.p();){q=r.gJ(r)
@@ -48622,7 +48622,7 @@ if(m.length===0)r=A.fE(A.aF("Sin datos recientes",o,o,o,B.z.au(B.x),o,o),o,o)
 else{r=B.c.gV(m)
 q=B.c.gZ(m)
 p=A.aQz(r<=q?B.dd:B.aY,m)
-r=p}return A.dA(A.bW(A.b([B.af1,B.ah,A.cZ(o,r,B.v,o,o,new A.bs(s,o,o,n,o,o,B.A),o,240,o,B.f_,o,o,o)],t.p),B.T,B.o,B.q),o,B.ak)},
+r=p}return A.dA(A.bW(A.b([B.af2,B.ah,A.cZ(o,r,B.v,o,o,new A.bs(s,o,o,n,o,o,B.A),o,240,o,B.f_,o,o,o)],t.p),B.T,B.o,B.q),o,B.ak)},
 a86(a,b){var s,r,q,p,o=null,n=b.c===B.bA,m=n?b.r:b.f,l=n?b.b:b.a,k=b.e,j=b.d*k,i=t.p,h=A.d9(A.b([new A.M6("Comprar",n,B.dd,new A.avk(a),o),B.d0,new A.M6("Vender",!n,B.aY,new A.avl(a),o)],i),B.J,B.o,B.q),g=this.d
 g===$&&A.a()
 g=A.ra(g,o,B.DW,"Cantidad ",!1,new A.avm(a),o,o,o)
@@ -49110,7 +49110,7 @@ $1(a){return a[0].toUpperCase()},
 $S:36}
 A.a_N.prototype={
 G(a){var s=this,r=null,q=s.c
-return A.dA(A.bW(A.b([B.aeZ,B.ah,new A.qH("Alertas de precio","Recibe notificaciones cuando cambie el precio",q.d,new A.aBa(s),r),B.ck,new A.qH("Confirmaciones de trading","Confirma cada transaccion",q.c,new A.aBb(s),r),B.ck,new A.qH("Mostrar portafolio","Incluye la vista de portafolio en el menu principal",q.b,new A.aBc(s),r)],t.p),B.T,B.o,B.q),r,B.ak)}}
+return A.dA(A.bW(A.b([B.af_,B.ah,new A.qH("Alertas de precio","Recibe notificaciones cuando cambie el precio",q.d,new A.aBa(s),r),B.ck,new A.qH("Confirmaciones de trading","Confirma cada transaccion",q.c,new A.aBb(s),r),B.ck,new A.qH("Mostrar portafolio","Incluye la vista de portafolio en el menu principal",q.b,new A.aBc(s),r)],t.p),B.T,B.o,B.q),r,B.ak)}}
 A.aBa.prototype={
 $1(a){var s=this.a
 return s.d.$1(s.c.ap2(a))},
@@ -49136,7 +49136,7 @@ return s.d.$1(s.c.ap3(a))},
 $S:11}
 A.a0I.prototype={
 G(a){var s=this.c
-return A.dA(A.bW(A.b([B.aeX,B.ah,new A.Jn("Idioma",s.e,B.OF,new A.aBG(this),null),B.ah,new A.Jn("Moneda preferida",s.f,B.Nq,new A.aBH(this),null)],t.p),B.T,B.o,B.q),null,B.ak)}}
+return A.dA(A.bW(A.b([B.aeY,B.ah,new A.Jn("Idioma",s.e,B.OF,new A.aBG(this),null),B.ah,new A.Jn("Moneda preferida",s.f,B.Nq,new A.aBH(this),null)],t.p),B.T,B.o,B.q),null,B.ak)}}
 A.aBG.prototype={
 $1(a){var s=this.a
 return s.d.$1(s.c.apb(a))},
@@ -49570,7 +49570,7 @@ return A.fo(s,A.w1(s,A.aF(m.a.toUpperCase()+m.b.toUpperCase(),s,s,s,B.z.e0(r?B.k
 A.IN.prototype={
 G(a){var s=null,r=this.c
 r=r==null?s:r.a.toUpperCase()+r.b.toUpperCase()
-return A.dA(A.bW(A.b([A.aF(r==null?"Selecciona un par":r,s,s,s,B.bq,s,s),B.aQ,A.aF("Grafico de precio (simulado)",s,s,s,B.z.au(B.x),s,s),B.bw,A.cZ(s,B.HO,B.v,s,s,new A.bs(s,s,s,A.c0(24),s,new A.iT(B.c4,B.eE,B.br,A.b([B.aw.bn(0.6),B.dU.bn(0.6)],t.t_),s,s),B.A),s,240,s,s,s,s,s),B.ah,B.af0],t.p),B.T,B.o,B.q),s,B.ak)}}
+return A.dA(A.bW(A.b([A.aF(r==null?"Selecciona un par":r,s,s,s,B.bq,s,s),B.aQ,A.aF("Grafico de precio (simulado)",s,s,s,B.z.au(B.x),s,s),B.bw,A.cZ(s,B.HO,B.v,s,s,new A.bs(s,s,s,A.c0(24),s,new A.iT(B.c4,B.eE,B.br,A.b([B.aw.bn(0.6),B.dU.bn(0.6)],t.t_),s,s),B.A),s,240,s,s,s,s,s),B.ah,B.af1],t.p),B.T,B.o,B.q),s,B.ak)}}
 A.Bp.prototype={
 ai(){return new A.M5(new A.jU(B.cF,$.aB()))},
 auC(a){return this.e.$1(a)}}
@@ -49617,7 +49617,7 @@ return A.cZ(p,A.aF("Solicita una cotizacion para ver el precio estimado.",p,p,p,
 r=A.c0(18)
 q=A.fC(B.an)
 o=o.c
-return A.cZ(p,A.bW(A.b([B.af_,B.aQ,A.aF(A.lX("USD").f4(o),p,p,p,B.bq.au(B.ax),p,p),B.aQ,A.aF("Vence en 30 segundos",p,p,p,B.c2.au(B.x),p,p)],t.p),B.T,B.o,B.q),B.v,p,p,new A.bs(s,p,q,r,p,p,B.A),p,p,p,B.f_,p,p,p)}}
+return A.cZ(p,A.bW(A.b([B.af0,B.aQ,A.aF(A.lX("USD").f4(o),p,p,p,B.bq.au(B.ax),p,p),B.aQ,A.aF("Vence en 30 segundos",p,p,p,B.c2.au(B.x),p,p)],t.p),B.T,B.o,B.q),B.v,p,p,new A.bs(s,p,q,r,p,p,B.A),p,p,p,B.f_,p,p,p)}}
 A.xe.prototype={
 Bs(){var s=0,r=A.u(t.Sj),q,p=2,o=[],n=this,m,l,k,j,i,h,g,f,e,d
 var $async$Bs=A.p(function(a,b){if(a===1){o.push(b)
@@ -49785,7 +49785,7 @@ A.Bi.prototype={
 G(a){var s=null,r=B.aw.bn(0.6),q=A.c0(18),p=A.fC(B.an),o=B.ax.bn(0.12),n=A.c0(12),m=t.p
 return A.dK(A.cZ(s,A.d9(A.b([A.cZ(s,A.iP(this.c,B.ax,s,20),B.v,s,s,new A.bs(o,s,s,n,s,s,B.A),s,36,s,s,s,s,36),B.d0,A.bW(A.b([A.aF(this.d,s,s,s,B.c2.au(B.x),s,s),B.fL,A.aF(this.e,s,s,s,B.ar.e0(B.aj,B.ag),s,s)],m),B.T,B.o,B.q)],m),B.J,B.o,B.q),B.v,s,s,new A.bs(r,s,p,q,s,s,B.A),s,s,s,B.f_,s,s,s),1)}}
 A.Xb.prototype={
-G(a){var s,r,q,p,o,n,m,l=t.p,k=A.b([B.af5,B.ah],l)
+G(a){var s,r,q,p,o,n,m,l=t.p,k=A.b([B.af6,B.ah],l)
 for(s=this.c,r=J.c3(s),q=r.ga7(s),p=this.d,o=p===0;q.p();){n=q.gJ(q)
 m=A.b([new A.Xa(n,o?0:n.b/p,null)],l)
 if(!n.j(0,r.gZ(s)))m.push(B.ck)
@@ -49902,7 +49902,7 @@ $0(){return J.eC(A.ed(this.a,!1,t.tj),new A.rg())},
 $S:0}
 A.Xk.prototype={
 G(a){var s=null
-return A.d9(A.b([A.cZ(s,B.LE,B.v,s,s,new A.bs(s,s,s,A.c0(14),s,B.cc,B.A),s,42,s,s,s,s,42),B.d0,A.aF("CryptoExchange",s,s,s,B.bq.au(B.aj),s,s)],t.p),B.J,B.o,B.cT)}}
+return A.d9(A.b([A.cZ(s,B.LE,B.v,s,s,new A.bs(s,s,s,A.c0(14),s,B.cc,B.A),s,42,s,s,s,s,42),B.d0,A.aF("Coin Venture",s,s,s,B.bq.au(B.aj),s,s)],t.p),B.J,B.o,B.cT)}}
 A.a_D.prototype={
 G(a){var s=this,r=null,q=s.e,p=q?B.k:B.x,o=q?B.cc:r,n=q?r:B.aw.bn(0.5),m=A.c0(18),l=A.iP(s.d,p,r,18)
 return A.fo(r,A.w1(r,A.d9(A.b([l,B.j0,A.aF(s.c,r,r,r,B.z.e0(p,q?B.ag:B.a6),r,r)],t.p),B.J,B.o,B.q),r,new A.bs(n,r,r,m,r,o,B.A),B.a5,r,B.ks),B.a2,!1,r,r,r,r,r,r,r,r,r,r,r,r,r,s.f,r,r,r,r,r,r)}}
@@ -96038,7 +96038,7 @@ A.a1P.prototype={}
 A.x4.prototype={
 G(a){var s=null,r=this.c
 r=r==null?s:"GoException: "+r.a
-return A.Uc(!0,A.fE(A.bW(A.b([B.afd,B.ah,A.aF(r==null?"page not found":r,s,s,s,s,s,s),B.ah,new A.II(new A.acF(a),B.af6,s)],t.p),B.J,B.fk,B.q),s,s),!0)}}
+return A.Uc(!0,A.fE(A.bW(A.b([B.afd,B.ah,A.aF(r==null?"page not found":r,s,s,s,s,s,s),B.ah,new A.II(new A.acF(a),B.af7,s)],t.p),B.J,B.fk,B.q),s,s),!0)}}
 A.acF.prototype={
 $0(){return A.Ek(this.a).pD(0,"/",null)},
 $S:0}
@@ -103061,10 +103061,10 @@ B.EH=new A.li(4,"emailSignIn")
 B.EI=new A.li(5,"verifyAndChangeEmail")
 B.EJ=new A.li(6,"revertSecondFactorAddition")
 B.OD=A.b(s([B.ED,B.EE,B.EF,B.EG,B.EH,B.EI,B.EJ]),A.aa("D<li>"))
-B.af4=new A.cV("Espanol",null,null,null,null,null,null,null,null)
-B.JM=new A.lu("es",B.af4,B.d6,null,t.b7)
-B.af3=new A.cV("Ingles",null,null,null,null,null,null,null,null)
-B.JK=new A.lu("en",B.af3,B.d6,null,t.b7)
+B.af5=new A.cV("Espanol",null,null,null,null,null,null,null,null)
+B.JM=new A.lu("es",B.af5,B.d6,null,t.b7)
+B.af4=new A.cV("Ingles",null,null,null,null,null,null,null,null)
+B.JK=new A.lu("en",B.af4,B.d6,null,t.b7)
 B.OF=A.b(s([B.JM,B.JK]),t.FG)
 B.a8j=new A.za(1,"estimate")
 B.a8k=new A.za(2,"previous")
@@ -105629,8 +105629,8 @@ B.a9O=new A.m8(3,"hide")
 B.aja=new A.m8(4,"remove")
 B.Dz=new A.m8(5,"timeout")
 B.a9P=new A.zq(null,null,null,null,null,null,null,null,null,null,null,null,null,null)
-B.af2=new A.cV("Ajustes guardados",null,null,null,null,null,null,null,null)
-B.a9Q=new A.uI(B.af2,null,null,null,null,null,null,null,B.fM,null,null,null,null,B.ko,null,null,null,B.aa,null)
+B.af3=new A.cV("Ajustes guardados",null,null,null,null,null,null,null,null)
+B.a9Q=new A.uI(B.af3,null,null,null,null,null,null,null,B.fM,null,null,null,null,B.ko,null,null,null,B.aa,null)
 B.DA=new A.Hg(0,"permissive")
 B.a9R=new A.Hg(1,"normal")
 B.a9S=new A.Hg(2,"forced")
@@ -106004,16 +106004,16 @@ B.ab1=new A.y(!0,B.m,null,".AppleSystemUIFont",null,null,null,null,null,null,nul
 B.aeT=new A.ev(B.acG,B.abJ,B.acH,B.adg,B.abn,B.abu,B.ac3,B.ad2,B.ach,B.adM,B.aaS,B.abc,B.adI,B.ae0,B.ab1)
 B.aeV=new A.cV("Estadisticas del activo",null,B.d4,null,null,null,null,null,null)
 B.aeW=new A.cV("Page Not Found",null,null,null,null,null,null,null,null)
-B.aeX=new A.cV("Preferencias",null,B.d4,null,null,null,null,null,null)
-B.aeY=new A.cV("Historial de operaciones",null,B.bq,null,null,null,null,null,null)
-B.aeZ=new A.cV("Notificaciones",null,B.d4,null,null,null,null,null,null)
-B.af_=new A.cV("Cotizacion estimada",null,B.ar,null,null,null,null,null,null)
-B.af0=new A.cV("Los datos graficos se muestran con fines ilustrativos.",null,B.c2,null,null,null,null,null,null)
-B.af1=new A.cV("Grafico de precio (1h)",null,B.d4,null,null,null,null,null,null)
-B.af5=new A.cV("Tus activos",null,B.bq,null,null,null,null,null,null)
+B.aeX=new A.cV("Coin Venture",null,B.fS,null,null,null,null,null,null)
+B.aeY=new A.cV("Preferencias",null,B.d4,null,null,null,null,null,null)
+B.aeZ=new A.cV("Historial de operaciones",null,B.bq,null,null,null,null,null,null)
+B.af_=new A.cV("Notificaciones",null,B.d4,null,null,null,null,null,null)
+B.af0=new A.cV("Cotizacion estimada",null,B.ar,null,null,null,null,null,null)
+B.af1=new A.cV("Los datos graficos se muestran con fines ilustrativos.",null,B.c2,null,null,null,null,null,null)
+B.af2=new A.cV("Grafico de precio (1h)",null,B.d4,null,null,null,null,null,null)
+B.af6=new A.cV("Tus activos",null,B.bq,null,null,null,null,null,null)
 B.abT=new A.y(!0,B.k,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null)
-B.af6=new A.cV("Go to home page",null,B.abT,null,null,null,null,null,null)
-B.af7=new A.cV("CryptoExchange",null,B.fS,null,null,null,null,null,null)
+B.af7=new A.cV("Go to home page",null,B.abT,null,null,null,null,null,null)
 B.af8=new A.cV("Configuracion",null,B.bq,null,null,null,null,null,null)
 B.af9=new A.cV("Crear cuenta",null,B.fS,null,null,null,null,null,null)
 B.afc=new A.cV("Home",null,null,null,null,null,null,null,null)

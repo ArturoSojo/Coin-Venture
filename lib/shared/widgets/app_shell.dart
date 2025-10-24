@@ -147,7 +147,7 @@ class _Branding extends StatelessWidget {
         ),
         const SizedBox(width: AppSpacing.sm),
         Text(
-          'CryptoExchange',
+          'Coin Venture',
           style: AppTypography.titleMd.copyWith(color: AppColors.textPrimary),
         ),
       ],

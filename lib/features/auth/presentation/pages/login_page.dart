@@ -73,7 +73,7 @@ class _LoginPageState extends State<LoginPage> {
                   child: const Icon(Icons.show_chart_rounded, size: 46, color: Colors.white),
                 ),
                 const SizedBox(height: AppSpacing.lg),
-                const Text('CryptoExchange', style: AppTypography.titleLg),
+                const Text('Coin Venture', style: AppTypography.titleLg),
                 const SizedBox(height: AppSpacing.xs),
                 Text(
                   'Inicia sesion en tu cuenta',
